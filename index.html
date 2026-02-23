@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор ОСАГО — Колибриполис — Новосибирская область</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geologica:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1f2d45;
+    --accent: #e8a020;
+    --accent2: #f0c060;
+    --text: #e8ecf4;
+    --muted: #6b7a9a;
+    --success: #2dbd8f;
+    --danger: #e05050;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geologica', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232,160,32,0.08) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(31,45,69,0.3) 39px, rgba(31,45,69,0.3) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(31,45,69,0.15) 39px, rgba(31,45,69,0.15) 40px);
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: rgba(232,160,32,0.12);
+    border: 1px solid rgba(232,160,32,0.3);
+    color: var(--accent);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 2px;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 7vw, 72px);
+    letter-spacing: 2px;
+    line-height: 0.95;
+    color: var(--text);
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .company-name {
+    font-family: 'Geologica', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--accent2);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+
+  .phone-block {
+    margin-top: 10px;
+  }
+
+  .phone-link {
+    display: inline-block;
+    background: rgba(232,160,32,0.12);
+    border: 1px solid rgba(232,160,32,0.4);
+    color: var(--accent);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 8px 22px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .phone-link:hover {
+    background: rgba(232,160,32,0.25);
+    color: var(--accent2);
+  }
+
+  .subtitle {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
+  }
+
+  .card-title {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  @media (max-width: 600px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  .field { display: flex; flex-direction: column; gap: 7px; }
+
+  label {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  select, input[type="number"] {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Geologica', sans-serif;
+    font-size: 14px;
+    padding: 11px 14px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7a9a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+
+  select:focus, input[type="number"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(232,160,32,0.1);
+  }
+
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  /* KBM table */
+  .kbm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 8px;
+  }
+
+  .kbm-table th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .kbm-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(31,45,69,0.5);
+  }
+
+  .kbm-table tr.selected td {
+    background: rgba(232,160,32,0.1);
+    color: var(--accent);
+  }
+
+  .kbm-table tr:hover td { background: rgba(255,255,255,0.02); cursor: pointer; }
+
+  /* Result */
+  .result-card {
+    background: linear-gradient(135deg, #0f1e12 0%, #0f1a2e 100%);
+    border: 1px solid rgba(45,189,143,0.2);
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--success), transparent);
+  }
+
+  .result-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--success);
+    margin-bottom: 8px;
+  }
+
+  .result-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    letter-spacing: 2px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .result-price span {
+    font-size: 28px;
+    color: var(--muted);
+  }
+
+  .coeff-breakdown {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .coeff-chip {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .coeff-chip b { color: var(--accent2); margin-left: 4px; }
+
+  .calc-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--accent);
+    color: #0a0e1a;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-top: 24px;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .calc-btn:hover { background: var(--accent2); }
+  .calc-btn:active { transform: scale(0.99); }
+
+  .tb-range {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .tb-range input { flex: 1; }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(31,45,69,0.5);
+    font-size: 13px;
+  }
+
+  .info-row:last-child { border-bottom: none; }
+  .info-row .val { color: var(--accent2); font-weight: 500; }
+
+  .note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 12px;
+    line-height: 1.6;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.02);
+    border-left: 2px solid var(--border);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .note-warning {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .note-cta {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--accent2);
+    line-height: 1.6;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  .note-cta strong {
+    color: var(--accent);
+  }
+
+  .range-hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ===== КП для клиента ===== */
+  .kp-card {
+    margin-top: 32px;
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: 0 0 40px rgba(232,160,32,0.15), 0 0 0 1px rgba(232,160,32,0.1);
+    position: relative;
+  }
+
+  .kp-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(232,160,32,0.015) 20px, rgba(232,160,32,0.015) 40px);
+    pointer-events: none;
+  }
+
+  .kp-header {
+    background: linear-gradient(135deg, #1a1200 0%, #1a2010 50%, #0f1a2e 100%);
+    border-bottom: 1px solid var(--accent);
+    padding: 22px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .kp-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .kp-company {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .kp-tagline {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  .kp-phone-block {
+    text-align: right;
+  }
+
+  .kp-phone {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--accent2);
+    text-decoration: none;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .kp-phone:hover { color: var(--accent); }
+
+  .kp-phone-note {
+    font-size: 11px;
+    color: var(--success);
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+  }
+
+  .kp-title-block {
+    text-align: center;
+    padding: 16px 28px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .kp-doc-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 4px;
+    color: var(--text);
+  }
+
+  .kp-doc-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  .kp-table {
+    margin: 0 28px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .kp-table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .kp-table-row:last-child { border-bottom: none; }
+
+  .kp-table-row:nth-child(even) { background: rgba(255,255,255,0.02); }
+
+  .kp-table-name { color: var(--muted); }
+
+  .kp-table-val { color: var(--accent2); font-weight: 600; }
+
+  .kp-total-block {
+    margin: 0 28px 16px;
+    padding: 16px 22px;
+    background: linear-gradient(135deg, rgba(45,189,143,0.08) 0%, rgba(232,160,32,0.08) 100%);
+    border: 1px solid rgba(232,160,32,0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .kp-total-label {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--success);
+  }
+
+  .kp-total-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 2px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .kp-range-block {
+    margin: 0 28px 8px;
+    padding: 12px 18px;
+    background: rgba(232,160,32,0.06);
+    border: 1px solid rgba(232,160,32,0.2);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .kp-range-block .range-label { flex: 1; min-width: 160px; }
+
+  .kp-range-block .range-values {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .kp-range-block .range-note {
+    width: 100%;
+    font-size: 10px;
+    color: var(--muted);
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+
+  .kp-formula-block {
+    margin: 0 28px 24px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.02);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .kp-formula-block span { color: var(--accent2); }
+
+  .kp-cta {
+    margin: 0 28px 20px;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, rgba(232,160,32,0.1) 0%, rgba(232,160,32,0.05) 100%);
+    border: 1px solid rgba(232,160,32,0.3);
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .kp-cta-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .kp-cta-desc {
+    font-size: 12px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 14px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .kp-cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #0a0e1a;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    padding: 12px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    margin-bottom: 12px;
+  }
+
+  .kp-cta-btn:hover { background: var(--accent2); transform: scale(1.02); }
+
+  .kp-disclaimer {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+
+  .kp-footer {
+    padding: 14px 28px;
+    background: rgba(0,0,0,0.3);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="header-badge">Указание ЦБ РФ №7204-У от 09.10.2025</div>
+    <h1>КАЛЬКУЛЯТОР <span>ОСАГО</span></h1>
+    <div class="company-name">от «Колибриполис»</div>
+    <div class="phone-block">
+      <a href="tel:89137804060" class="phone-link">8 913 780 40 60</a>
+    </div>
+    <div class="subtitle">Новосибирская область · Физические лица · Легковые автомобили категории «В»</div>
+  </header>
+
+  <!-- Населённый пункт -->
+  <div class="card">
+    <div class="card-title">01 · Место регистрации ТС</div>
+    <div class="field">
+      <label>Населённый пункт</label>
+      <select id="city" onchange="updateKT()">
+        <option value="3.12">Новосибирск (КТ = 3,12)</option>
+        <option value="2.48">Бердск (КТ = 2,48)</option>
+        <option value="2.32">Искитим (КТ = 2,32)</option>
+        <option value="2.00">Куйбышев (КТ = 2,00)</option>
+        <option value="2.00">Прочие города и н.п. (КТ = 2,00)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Базовая ставка -->
+  <div class="card">
+    <div class="card-title">02 · Базовая ставка (ТБ)</div>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px;">
+      Для ТС категории «В» физических лиц: от <b style="color:var(--text)">1 399</b> до <b style="color:var(--text)">8 665</b> руб. Страховщик устанавливает самостоятельно.
+    </p>
+    <div class="field">
+      <label>Укажите базовую ставку (руб.)</label>
+      <input type="number" id="tb" value="5500" min="1399" max="8665" oninput="clampTB()">
+      <div class="range-hint" id="tb-hint">Допустимый диапазон: 1 399 — 8 665 руб.</div>
+    </div>
+  </div>
+
+  <!-- КМ — мощность -->
+  <div class="card">
+    <div class="card-title">03 · Мощность двигателя (КМ)</div>
+    <div class="field">
+      <label>Мощность, л.с.</label>
+      <select id="km" onchange="calculate()">
+        <option value="0.6">до 50 л.с. включительно (КМ = 0,6)</option>
+        <option value="1.0">свыше 50 до 70 л.с. включительно (КМ = 1,0)</option>
+        <option value="1.1" selected>свыше 70 до 100 л.с. включительно (КМ = 1,1)</option>
+        <option value="1.2">свыше 100 до 120 л.с. включительно (КМ = 1,2)</option>
+        <option value="1.4">свыше 120 до 150 л.с. включительно (КМ = 1,4)</option>
+        <option value="1.6">свыше 150 л.с. (КМ = 1,6)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- КБМ -->
+  <div class="card">
+    <div class="card-title">04 · Коэффициент бонус-малус (КБМ)</div>
+    <p style="font-size:12px; color:var(--muted); margin-bottom:14px;">Выберите текущий класс водителя. Новому водителю присваивается 3-й класс (КБМ = 1,17).</p>
+    <table class="kbm-table" id="kbmTable">
+      <thead>
+        <tr>
+          <th>Класс</th>
+          <th>КБМ</th>
+          <th>Описание</th>
+        </tr>
+      </thead>
+      <tbody id="kbmBody"></tbody>
+    </table>
+  </div>
+
+  <!-- КВС -->
+  <div class="card">
+    <div class="card-title">05 · Возраст и стаж водителя (КВС)</div>
+    <div class="grid-2">
+      <div class="field">
+        <label>Возраст водителя</label>
+        <select id="age" onchange="calculate()">
+          <option value="0">18–21 год</option>
+          <option value="1">22–24 года</option>
+          <option value="2">25–29 лет</option>
+          <option value="3">30–34 года</option>
+          <option value="4">35–39 лет</option>
+          <option value="5">40–49 лет</option>
+          <option value="6">50–59 лет</option>
+          <option value="7">старше 59 лет</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Стаж управления ТС</label>
+        <select id="exp" onchange="calculate()">
+          <option value="0">менее 1 года</option>
+          <option value="1">от 1 до 2 лет</option>
+          <option value="2">от 2 до 3 лет</option>
+          <option value="3">от 3 до 5 лет</option>
+          <option value="4">от 5 до 7 лет</option>
+          <option value="5">от 7 до 10 лет</option>
+          <option value="6">от 10 до 15 лет</option>
+          <option value="7" selected>от 15 лет и более</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-top:14px; display:flex; align-items:center; gap:10px;">
+      <div style="font-size:13px; color:var(--muted)">Значение КВС:</div>
+      <div style="font-size:18px; font-weight:600; color:var(--accent2)" id="kvsDisplay">–</div>
+    </div>
+  </div>
+
+  <!-- КО -->
+  <div class="card">
+    <div class="card-title">06 · Ограничение списка водителей (КО)</div>
+    <div class="field">
+      <label>Тип допуска</label>
+      <select id="ko" onchange="calculate()">
+        <option value="1.0" selected>Список водителей указан (КО = 1,0)</option>
+        <option value="3.16">Без ограничений — любой водитель (КО = 3,16)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- КС -->
+  <div class="card">
+    <div class="card-title">07 · Период использования ТС (КС)</div>
+    <div class="field">
+      <label>Период использования</label>
+      <select id="ks" onchange="calculate()">
+        <option value="0.5">3 месяца (КС = 0,5)</option>
+        <option value="0.6">свыше 3 до 4 мес. (КС = 0,6)</option>
+        <option value="0.65">свыше 4 до 5 мес. (КС = 0,65)</option>
+        <option value="0.7">свыше 5 до 6 мес. (КС = 0,7)</option>
+        <option value="0.8">свыше 6 до 7 мес. (КС = 0,8)</option>
+        <option value="0.9">свыше 7 до 8 мес. (КС = 0,9)</option>
+        <option value="0.95">свыше 8 до 9 мес. (КС = 0,95)</option>
+        <option value="1.0" selected>свыше 9 месяцев / весь год (КС = 1,0)</option>
+      </select>
+    </div>
+  </div>
+
+
+
+  <!-- Результат -->
+  <div class="result-card" id="resultCard" style="display:none">
+    <div class="result-label">Расчётная страховая премия</div>
+    <div class="result-price" id="resultPrice">–</div>
+
+    <div class="coeff-breakdown" id="coeffBreakdown"></div>
+
+    <div style="margin-top: 24px; text-align:left;">
+      <div class="info-row">
+        <span>Формула расчёта</span>
+        <span class="val" style="font-size:11px">ТБ × КТ × КБМ × КВС × КО × КМ × КС</span>
+      </div>
+      <div class="info-row" id="rowFormula"></div>
+    </div>
+
+    <div class="note">
+      <div class="note-warning">Расчёт является ориентировочным. Итоговая премия определяется страховщиком в пределах тарифного коридора согласно Указанию ЦБ РФ №7204-У от 09.10.2025.</div>
+      <div class="note-cta">Обращайтесь к агентам страхового агентства <strong>«Колибриполис»</strong> — они подберут вам самый выгодный вариант полиса ОСАГО!</div>
+    </div>
+  </div>
+
+  <!-- КП для клиента -->
+  <div class="kp-card" id="kpCard" style="display:none">
+    <div class="kp-header">
+      <div class="kp-logo">
+        <div>
+          <div class="kp-company">«Колибриполис»</div>
+          <div class="kp-tagline">Страховое агентство · Новосибирск</div>
+        </div>
+      </div>
+      <div class="kp-phone-block">
+        <a href="tel:89137804060" class="kp-phone">8 913 780 40 60</a>
+        <div class="kp-phone-note">Позвоните — оформим за 15 минут!</div>
+      </div>
+    </div>
+
+    <div class="kp-title-block">
+      <div class="kp-doc-label">КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ</div>
+      <div class="kp-doc-subtitle">Расчёт стоимости полиса ОСАГО</div>
+    </div>
+
+    <div class="kp-table" id="kpParams"></div>
+
+    <div class="kp-total-block">
+      <div class="kp-total-label">Итоговая страховая премия</div>
+      <div class="kp-total-price" id="kpPrice">–</div>
+    </div>
+
+    <div class="kp-range-block" id="kpRange"></div>
+
+    <div class="kp-formula-block" id="kpFormula"></div>
+
+    <div class="kp-cta">
+      <div class="kp-cta-text">Готовы оформить полис?</div>
+      <div class="kp-cta-desc">Свяжитесь с нашим агентом прямо сейчас — мы подберём наиболее выгодный вариант ОСАГО и оформим полис онлайн без визита в офис!</div>
+      <a href="tel:89137804060" class="kp-cta-btn">ПОЗВОНИТЬ: 8 913 780 40 60</a>
+      <div class="kp-disclaimer">* Расчёт является ориентировочным. Итоговая премия определяется страховщиком в пределах тарифного коридора согласно Указанию ЦБ РФ №7204-У от 09.10.2025.</div>
+    </div>
+
+    <div class="kp-footer">
+      <span>«Колибриполис»</span>
+      <span>·</span>
+      <span>Новосибирская область</span>
+      <span>·</span>
+      <span id="kpDate"></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===== KBM данные =====
+const KBM_DATA = [
+  { cls: 'M', kbm: 3.92 },
+  { cls: '0', kbm: 2.94 },
+  { cls: '1', kbm: 2.25 },
+  { cls: '2', kbm: 1.76 },
+  { cls: '3', kbm: 1.17 },
+  { cls: '4', kbm: 1.00 },
+  { cls: '5', kbm: 0.91 },
+  { cls: '6', kbm: 0.83 },
+  { cls: '7', kbm: 0.78 },
+  { cls: '8', kbm: 0.74 },
+  { cls: '9', kbm: 0.68 },
+  { cls: '10', kbm: 0.63 },
+  { cls: '11', kbm: 0.57 },
+  { cls: '12', kbm: 0.52 },
+  { cls: '13', kbm: 0.46 },
+];
+
+let selectedKBM = 1.17;
+let selectedKBMClass = '3';
+
+// ===== KVS таблица (кат. B, физ. лица) =====
+const KVS = [
+  [2.27, 1.92, 1.84, 1.65, 1.62, null, null, null],
+  [1.88, 1.72, 1.71, 1.13, 1.10, 1.09, null, null],
+  [1.72, 1.60, 1.54, 1.09, 1.08, 1.07, 1.02, null],
+  [1.56, 1.50, 1.48, 1.05, 1.04, 1.01, 0.97, 0.95],
+  [1.54, 1.47, 1.46, 1.00, 0.97, 0.95, 0.94, 0.93],
+  [1.50, 1.44, 1.43, 0.96, 0.95, 0.94, 0.93, 0.91],
+  [1.46, 1.40, 1.39, 0.93, 0.92, 0.91, 0.90, 0.86],
+  [1.43, 1.36, 1.35, 0.91, 0.90, 0.89, 0.88, 0.83],
+];
+
+const KVS_MAX_EXP = [4, 5, 6, 7, 7, 7, 7, 7];
+
+function buildKBMTable() {
+  const tbody = document.getElementById('kbmBody');
+  tbody.innerHTML = '';
+  KBM_DATA.forEach(row => {
+    const tr = document.createElement('tr');
+    if (row.cls === '3') tr.classList.add('selected');
+    const desc = row.cls === 'M' ? 'Аварийщик' : row.cls === '0' ? 'Нет истории' : row.cls === '3' ? 'Новый / базовый' : row.kbm < 1 ? 'Скидка за безаварийность' : 'Надбавка за аварии';
+    tr.innerHTML = `<td>${row.cls}</td><td><b>${row.kbm.toFixed(2)}</b></td><td style="color:var(--muted)">${desc}</td>`;
+    tr.onclick = () => {
+      document.querySelectorAll('#kbmTable tr').forEach(r => r.classList.remove('selected'));
+      tr.classList.add('selected');
+      selectedKBM = row.kbm;
+      selectedKBMClass = row.cls;
+      calculate();
+    };
+    tbody.appendChild(tr);
+  });
+}
+
+function getKVS() {
+  const age = parseInt(document.getElementById('age').value);
+  let exp = parseInt(document.getElementById('exp').value);
+  const maxExp = KVS_MAX_EXP[age];
+  if (exp > maxExp) exp = maxExp;
+  const val = KVS[age][exp];
+  return val !== null ? val : KVS[age][maxExp];
+}
+
+function updateKT() { calculate(); }
+
+function clampTB() {
+  const inp = document.getElementById('tb');
+  const v = parseFloat(inp.value);
+  const hint = document.getElementById('tb-hint');
+  if (v < 1399) hint.style.color = 'var(--danger)';
+  else if (v > 8665) hint.style.color = 'var(--danger)';
+  else hint.style.color = 'var(--muted)';
+  calculate();
+}
+
+function calculate() {
+  const ko = parseFloat(document.getElementById('ko').value);
+  const isUnlimited = ko === 3.16;
+
+  // При неограниченном списке водителей — КБМ принудительно 1.17 (класс 3)
+  if (isUnlimited) {
+    selectedKBM = 1.17;
+    selectedKBMClass = '3';
+    document.querySelectorAll('#kbmTable tr').forEach(r => r.classList.remove('selected'));
+    const rows = document.querySelectorAll('#kbmBody tr');
+    rows.forEach(r => { if (r.cells[0] && r.cells[0].textContent === '3') r.classList.add('selected'); });
+  }
+
+  const kvs = isUnlimited ? 1.0 : getKVS();
+
+  document.getElementById('kvsDisplay').textContent = kvs.toFixed(2);
+
+  document.getElementById('age').disabled = isUnlimited;
+  document.getElementById('exp').disabled = isUnlimited;
+  document.getElementById('age').style.opacity = isUnlimited ? '0.4' : '1';
+  document.getElementById('exp').style.opacity = isUnlimited ? '0.4' : '1';
+
+  const tb = parseFloat(document.getElementById('tb').value) || 5500;
+  const kt = parseFloat(document.getElementById('city').value);
+  const kbm = selectedKBM;
+  const km = parseFloat(document.getElementById('km').value);
+  const ks = parseFloat(document.getElementById('ks').value);
+
+  const premium = tb * kt * kbm * kvs * ko * km * ks;
+  const rounded = Math.round(premium);
+
+  document.getElementById('resultCard').style.display = 'block';
+  document.getElementById('resultPrice').innerHTML = `${rounded.toLocaleString('ru-RU')} <span>руб.</span>`;
+
+  const chips = [
+    { name: 'ТБ', val: tb.toLocaleString('ru-RU') + ' р.' },
+    { name: 'КТ', val: kt.toFixed(2) },
+    { name: 'КБМ', val: kbm.toFixed(2) + ' (кл.' + selectedKBMClass + ')' },
+    { name: 'КВС', val: kvs.toFixed(2) + (isUnlimited ? ' (авто)' : '') },
+    { name: 'КО', val: ko.toFixed(2) },
+    { name: 'КМ', val: km.toFixed(1) },
+    { name: 'КС', val: ks.toFixed(2) },
+  ];
+
+  document.getElementById('coeffBreakdown').innerHTML = chips.map(c =>
+    `<div class="coeff-chip">${c.name}<b>${c.val}</b></div>`
+  ).join('');
+
+  document.getElementById('rowFormula').innerHTML = `
+    <span style="font-size:11px;color:var(--muted)">${tb.toLocaleString('ru-RU')} × ${kt} × ${kbm} × ${kvs} × ${ko} × ${km} × ${ks}</span>
+    <span class="val">${rounded.toLocaleString('ru-RU')} руб.</span>
+  `;
+
+  
+
+  // === Заполнение КП ===
+  const cityEl = document.getElementById('city');
+  const cityText = cityEl.options[cityEl.selectedIndex].text.split(' (')[0];
+
+  const kmEl = document.getElementById('km');
+  const kmText = kmEl.options[kmEl.selectedIndex].text.split(' (')[0];
+
+  const ksEl = document.getElementById('ks');
+  const ksText = ksEl.options[ksEl.selectedIndex].text.split(' (')[0];
+
+  const koEl = document.getElementById('ko');
+  const koText = koEl.options[koEl.selectedIndex].text.split(' (')[0];
+
+  const ageEl = document.getElementById('age');
+  const ageText = ageEl.options[ageEl.selectedIndex].text;
+
+  const expEl = document.getElementById('exp');
+  const expText = expEl.options[expEl.selectedIndex].text;
+
+  const kpParams = [
+    { name: 'Место регистрации ТС', val: cityText },
+    { name: 'Базовая ставка (ТБ)', val: tb.toLocaleString('ru-RU') + ' руб.' },
+    { name: 'Коэффициент территории (КТ)', val: kt.toFixed(2) },
+    { name: 'Мощность двигателя', val: kmText },
+    { name: 'КМ', val: km.toFixed(1) },
+    { name: 'Класс КБМ / коэффициент', val: 'Класс ' + selectedKBMClass + ' / ' + kbm.toFixed(2) },
+    { name: isUnlimited ? 'Возраст/стаж (неограниченный список)' : 'Возраст водителя', val: isUnlimited ? 'Без ограничений' : ageText },
+    ...(!isUnlimited ? [{ name: 'Стаж управления ТС', val: expText }] : []),
+    { name: 'КВС', val: kvs.toFixed(2) },
+    { name: 'Список водителей (КО)', val: koText },
+    { name: 'КО', val: ko.toFixed(2) },
+    { name: 'Период использования (КС)', val: ksText },
+    { name: 'КС', val: ks.toFixed(2) },
+  ];
+
+  document.getElementById('kpParams').innerHTML = kpParams.map(p =>
+    `<div class="kp-table-row"><span class="kp-table-name">${p.name}</span><span class="kp-table-val">${p.val}</span></div>`
+  ).join('');
+
+  document.getElementById('kpPrice').innerHTML = `${rounded.toLocaleString('ru-RU')} <span style="font-size:26px;color:var(--muted)">руб.</span>`;
+
+  // Диапазон цен по тарифному коридору (ТБ от 1399 до 8665 руб.)
+  const TB_MIN = 1399, TB_MAX = 8665;
+  const coeffProduct = kt * kbm * kvs * ko * km * ks;
+  const rangeMin = Math.round(TB_MIN * coeffProduct);
+  const rangeMax = Math.round(TB_MAX * coeffProduct);
+  document.getElementById('kpRange').innerHTML = `
+    <span class="range-label">Диапазон премии по тарифному коридору ЦБ РФ:</span>
+    <span class="range-values">от ${rangeMin.toLocaleString('ru-RU')} до ${rangeMax.toLocaleString('ru-RU')} руб.</span>
+    <span class="range-note">ТБ от ${TB_MIN.toLocaleString('ru-RU')} до ${TB_MAX.toLocaleString('ru-RU')} руб. — страховщик вправе применять любое значение в этом коридоре</span>
+  `;
+
+  document.getElementById('kpFormula').innerHTML =
+    `Формула: <span>ТБ</span> × <span>КТ</span> × <span>КБМ</span> × <span>КВС</span> × <span>КО</span> × <span>КМ</span> × <span>КС</span> = 
+     ${tb.toLocaleString('ru-RU')} × ${kt} × ${kbm} × ${kvs} × ${ko} × ${km} × ${ks} = <span>${rounded.toLocaleString('ru-RU')} руб.</span>`;
+
+  document.getElementById('kpDate').textContent = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
+
+  document.getElementById('kpCard').style.display = 'block';
+}
+
+// Init
+buildKBMTable();
+calculate();
+</script>
+</body>
+</html>
